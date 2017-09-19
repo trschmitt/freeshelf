@@ -5,7 +5,8 @@
   <%= link_to "Books", books_path %>
   <%= link_to "Logout", sessions_path, method: :destroy %>
 <% else %>
-  You are not logged in...
+  You are not logged in... Signup here!
+  <%= link_to "Sign Up", new_users_path %>
 <% end %>
 
 <%= form_tag sessions_path do %>

@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
-  validates_uniqueness_of :email
+  validates :email,
+    uniqueness: true,
+    format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/}
 
   before_validation :downcase_email
 
