@@ -3,13 +3,13 @@
 <% if current_user %>
   You are now logged in as: <%= current_user.email %>.
   <%= link_to "Books", books_path %>
-  <%= link_to "Logout", sessions_path, method: :destroy %>
+  <%= link_to "Logout", session_path, method: :destroy %>
 <% else %>
   You are not logged in... Signup here!
-  <%= link_to "Sign Up", new_users_path %>
+  <%= link_to "Sign Up", new_user_path %>
 <% end %>
 
-<%= form_tag sessions_path do %>
+<%= form_tag session_path do %>
   Email: <%= text_field_tag :email %>
   Password: <%= password_field_tag :password %>
   <%= submit_tag "Submit" %>
