@@ -4,6 +4,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def show
+    @user = User.find(params[:id])
+    @books = @user.books
+  end
+
   def create
     @user = User.new(user_params)
 
