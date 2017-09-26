@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /books
   # GET /books.json
@@ -57,19 +59,33 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
+      format.html { redirect_to books_path, notice: 'Book was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book
-      @book = Book.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_params
-      params.require(:book).permit(:title, :author, :description, :URL, :user_id)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_params
+    params.require(:book).permit(:title, :author, :description, :URL, :user_id)
+  end
+
+  def authorize_user
+    if @book.user == current_user
+      redirect_to @book
+    else
+      redirect_to books_path, notice: 'You do not have permission to edit this book entry bub. -.- YOU SHALL NOT PASS!'
     end
+  end
+
+  def authenticate_user
+
+  end
+
 end
