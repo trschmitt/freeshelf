@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   # GET /books
   # GET /books.json
@@ -77,15 +77,9 @@ class BooksController < ApplicationController
   end
 
   def authorize_user
-    if @book.user == current_user
-      redirect_to @book
-    else
+    unless @book.user == current_user
       redirect_to books_path, notice: 'You do not have permission to edit this book entry bub. -.- YOU SHALL NOT PASS!'
     end
-  end
-
-  def authenticate_user
-
   end
 
 end
